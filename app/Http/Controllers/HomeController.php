@@ -15,4 +15,9 @@ class HomeController extends Controller
     {
         return "Your name is: $name";
     }
+
+    public function card()
+    {
+        return view('card');
+    }
 }
