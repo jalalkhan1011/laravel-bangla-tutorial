@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\StudentController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -17,7 +18,7 @@ Route::get('/', function () {
 Route::get('/students',[StudentController::class,'insertStudent']);
 Route::get('/all-students',[StudentController::class,'allStudents']);
 Route::get('/student-update/{id}',[StudentController::class,'updateStudent']);
-Route::get('/student-delete/{id}',[StudentController::class,'deleteStudent']);
+Route::get('/student-delete/{id}',[StudentController::class,'studentDelete']);
 
 // Route::get('/cards',[HomeController::class,'card']);
 

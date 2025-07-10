@@ -7,43 +7,49 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    //insert
     public function insertStudent()
     {
         // $student = new Student;
-        // $student->name = 'Kamal hossain';
-        // $student->address = 'Khulna,Bangladesh';
+
+        // $student->name = 'Afnan Khan';
+        // $student->address = 'khulna,bangladesh';
         // $student->save();
 
         Student::create([
-            'name'=>'Kobir Hossain',
-            'address' => 'Khulna,Bangladesh'
+            'name' => 'arman khan',
+            'address' => 'dhaka,bangladesh'
         ]);
 
-        return "Student data insert successfully";
+        return "Student Insert Successfully!";
     }
 
+    //data fatech or read from database
     public function allStudents()
     {
         $students = Student::all();
 
-        return view('allstudents', compact('students'));
+        return view('student', compact('students'));
     }
 
+    //update data
     public function updateStudent($id)
     {
         $student = Student::findOrFail($id);
 
-        $student->name = "arif hasan";
+        $student->name = 'Rahim khan';
         $student->save();
 
-        return "student updated successfully";
+        return "Student Updated Successfully!";
     }
 
-    public function deleteStudent($id){
+    //delete
+    public function studentDelete($id)
+    {
         $student = Student::findOrFail($id);
 
         $student->delete();
 
-        return "student deleted successfully";
+        return "Student Deleted Successfully!";
     }
 }
