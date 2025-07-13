@@ -15,10 +15,13 @@ Route::get('/', function () {
 // Route::get('/form',[FormController::class,'showForm']);
 // Route::post('/form',[FormController::class,'submit'])->name('submit.form');
 /////
-Route::get('/students',[StudentController::class,'insertStudent']);
-Route::get('/all-students',[StudentController::class,'allStudents']);
-Route::get('/student-update/{id}',[StudentController::class,'updateStudent']);
-Route::get('/student-delete/{id}',[StudentController::class,'studentDelete']);
+Route::get('/students',[StudentController::class,'index'])->name('student.index');
+Route::get('/student/create',[StudentController::class,'create'])->name('student.create');
+Route::post('/student/store',[StudentController::class,'store'])->name('student.store');
+Route::get('/student/show/{id}',[StudentController::class,'show'])->name('student.show');
+Route::get('/student/{id}/edit',[StudentController::class,'edit'])->name('student.edit');
+Route::put('/student/update/{id}',[StudentController::class,'update'])->name('student.update');
+Route::delete('/student/delete/{id}',[StudentController::class,'delete'])->name('student.delete');
 
 // Route::get('/cards',[HomeController::class,'card']);
 
