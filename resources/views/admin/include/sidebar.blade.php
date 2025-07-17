@@ -36,7 +36,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Studens:</h6>
-                        <a class="collapse-item" href="{{ route('student.index') }}">Student</a> 
+                        <a class="collapse-item" href="{{ route('students.index') }}">Student</a> 
                     </div>
                 </div>
             </li>

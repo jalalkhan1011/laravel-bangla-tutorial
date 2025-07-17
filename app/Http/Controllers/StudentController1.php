@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //index for studnet list
     public function index()
     {
         $students = Student::all();
@@ -17,17 +15,13 @@ class StudentController extends Controller
         return view('student.index', compact('students'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    //student crate
     public function create()
     {
         return view('student.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    //student store
     public function store(Request $request)
     {
         $request->validate([
@@ -41,33 +35,27 @@ class StudentController extends Controller
             'student_address' => $request->student_address
         ]);
 
-        return redirect(route('students.index'))->with('success','Student Created Successfully!');
+        return redirect(route('student.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    //studetn show
+    public function show($id)
     {
         $student = Student::findOrFail($id);
 
         return view('student.show', compact('student'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    //student edit
+    public function edit($id)
     {
         $student = Student::findOrFail($id);
 
         return view('student.edit', compact('student'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    //student update
+    public function update(Request $request, $id)
     {
         $student = Student::findOrFail($id);
 
@@ -82,18 +70,16 @@ class StudentController extends Controller
             'student_address' => $request->student_address
         ]);
 
-        return redirect(route('students.index'))->with('warning','Student updated Successfully!');
+        return redirect(route('student.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // student delete
+    public function delete($id)
     {
         $student = Student::findOrFail($id);
 
         $student->delete();
 
-        return redirect(route('students.index'))->with('error','Student deleted successfully');
+        return redirect(route('student.index'));
     }
 }

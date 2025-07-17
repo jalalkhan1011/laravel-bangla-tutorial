@@ -18,12 +18,29 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Student list</h6>
                             </div>
                             <div class="col-md-6 text-right">
-                                <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary">Add</a>
+                                <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary">Add</a>
                             </div>
                         </div>
 
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('warning'))
+                            <div class="alert alert-warning">
+                                {{ session('warning') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <table class="table">
                             <thead>
                                 <tr>
@@ -45,13 +62,13 @@
                                         <td>
                                             <ul class="list-inline">
                                                 <li class="list-inline-item"><a
-                                                        href="{{ route('student.show', $student->id) }}"
+                                                        href="{{ route('students.show', $student->id) }}"
                                                         class="btn btn-sm btn-success">View</a></li>
                                                 <li class="list-inline-item"><a
-                                                        href="{{ route('student.edit', $student->id) }}"
+                                                        href="{{ route('students.edit', $student->id) }}"
                                                         class="btn btn-sm btn-warning">Edit</a></li>
                                                 <li class="list-inline-item">
-                                                    <form action="{{ route('student.delete', $student->id) }}"
+                                                    <form action="{{ route('students.destroy', $student->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')
