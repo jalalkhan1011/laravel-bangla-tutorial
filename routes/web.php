@@ -23,6 +23,7 @@ Route::get('/', function () {
 // Route::put('/student/update/{id}',[StudentController::class,'update'])->name('student.update');
 // Route::delete('/student/delete/{id}',[StudentController::class,'delete'])->name('student.delete');
 
+Route::get('/students/{student}',[StudentController::class,'show'])->name('students.show');
 Route::resource('/students', StudentController::class);
 
 // Route::get('/cards',[HomeController::class,'card']);

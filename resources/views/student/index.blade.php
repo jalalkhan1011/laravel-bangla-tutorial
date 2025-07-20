@@ -62,7 +62,7 @@
                                         <td>
                                             <ul class="list-inline">
                                                 <li class="list-inline-item"><a
-                                                        href="{{ route('students.show', $student->id) }}"
+                                                        href="{{ route('students.show', $student->slug) }}"
                                                         class="btn btn-sm btn-success">View</a></li>
                                                 <li class="list-inline-item"><a
                                                         href="{{ route('students.edit', $student->id) }}"
