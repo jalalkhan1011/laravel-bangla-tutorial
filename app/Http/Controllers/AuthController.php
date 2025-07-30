@@ -56,4 +56,9 @@ class AuthController extends Controller
         Auth::logout();
         return redirect(route('login'));
     }
+
+    public function adminDashboard()
+    {
+        return "Wellcome to admin dashbaord";
+    }
 }

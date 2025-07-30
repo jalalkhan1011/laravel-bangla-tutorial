@@ -17,7 +17,8 @@ Route::get('/register',[AuthController::class,'showRegisterForm'])->name('regist
 Route::post('/register',[AuthController::class,'register']);
 Route::get('/login',[AuthController::class,'showLoginForm'])->name('login');
 Route::post('/login',[AuthController::class,'login']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');  
+Route::get('/admin-dashboard',[AuthController::class,'adminDashboard'])->middleware('checkAdmin');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
 // Auth::routes();
