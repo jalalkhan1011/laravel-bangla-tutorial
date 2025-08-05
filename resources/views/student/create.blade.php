@@ -19,7 +19,7 @@
 
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('students.store') }}" method="POST">
+                        <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="">Student Name <span class="text-danger"> *</span></label>
@@ -38,6 +38,13 @@
                                 <label for="" class="mt-2">Student Address</label>
                                 <input type="text" class="form-control" id="" name="student_address"
                                     aria-describedby="emailHelp" placeholder="Enter student address">
+
+                                <label for="" class="mt-2">Image</label>
+                                <input type="file" class="form-control" id="" name="student_image"
+                                    placeholder="Enter student image">
+                                @error('student_image')
+                                    <div><span class="text-danger">{{ $message }}</span></div>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

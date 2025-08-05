@@ -45,6 +45,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Student Name</th>
                                     <th scope="col">Student Address</th>
                                     <th scope="col">Student Email</th>
@@ -56,6 +57,7 @@
                                 @foreach ($students as $student)
                                     <tr>
                                         <td>{{ ++$i }}</td>
+                                        <td><img src="{{ asset('upload/studentImage/' . $student->student_image) }}" height="50"></td>
                                         <td>{{ $student->student_name ?: '' }}</td>
                                         <td>{{ $student->student_address ?: '' }}</td>
                                         <td>{{ $student->student_email ?: '' }}</td>
@@ -65,10 +67,10 @@
                                                         href="{{ route('students.show', $student->slug) }}"
                                                         class="btn btn-sm btn-success">View</a></li>
                                                 <li class="list-inline-item"><a
-                                                        href="{{ route('students.edit', $student->id) }}"
+                                                        href="{{ route('students.edit', $student->slug) }}"
                                                         class="btn btn-sm btn-warning">Edit</a></li>
                                                 <li class="list-inline-item">
-                                                    <form action="{{ route('students.destroy', $student->id) }}"
+                                                    <form action="{{ route('students.destroy', $student->slug) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')
