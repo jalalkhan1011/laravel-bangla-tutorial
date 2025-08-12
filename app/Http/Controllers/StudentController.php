@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -33,7 +34,8 @@ class StudentController extends Controller
         $request->validate([
             'student_name' => 'required|min:3',
             'student_email' => 'required|email|unique:students,student_email',
-            'student_image' => 'nullable|image|mimes:png,jpeg,gif,jpg'
+            'student_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
+            'parent_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
         ]);
 
         // Student::create([
@@ -50,6 +52,17 @@ class StudentController extends Controller
             $image->move(public_path('upload/studentImage/'), $imageName);
 
             $data['student_image'] = $imageName;
+        }
+
+        if ($request->hasFile('parent_image')) {
+            $image = $request->parent_image;
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            $imagePath = 'upload/student/parent/' . $imageName;
+
+            Storage::disk('public')->put($imagePath, file_get_contents($image));
+
+            $data['parent_image'] = $imagePath;
         }
 
         Student::create($data);
@@ -88,7 +101,8 @@ class StudentController extends Controller
         $request->validate([
             'student_name' => 'required|min:3',
             'student_email' => 'required|email|unique:students,student_email,' . $student->id,
-            'student_image' => 'nullable|image|mimes:png,jpeg,gif,jpg'
+            'student_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
+            'parent_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
         ]);
 
         // $student->update([
@@ -98,13 +112,28 @@ class StudentController extends Controller
         // ]);
         $data = $request->all();
         if ($request->hasFile('student_image')) {
-            unlink(public_path('upload/studentImage/'.$student->student_image));
+            unlink(public_path('upload/studentImage/' . $student->student_image));
             $image = $request->student_image;
 
             $imageName = time() . rand(1, 99) . '.' . $image->extension();
             $image->move(public_path('upload/studentImage/'), $imageName);
 
             $data['student_image'] = $imageName;
+        }
+
+        if ($request->hasFile('parent_image')) {
+            if ($student->parent_image && Storage::disk('public')->exists($student->parent_image)) {
+                Storage::disk('public')->delete($student->parent_image);
+            }
+
+            $image = $request->parent_image;
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            $imagePath = 'upload/student/parent/' . $imageName;
+
+            Storage::disk('public')->put($imagePath, file_get_contents($image));
+
+            $data['parent_image'] = $imagePath;
         }
 
         $student->update($data);
@@ -119,7 +148,10 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         // $student = Student::findOrFail($id);
-        unlink(public_path('upload/studentImage/'.$student->student_image));
+        unlink(public_path('upload/studentImage/' . $student->student_image));
+        if ($student->parent_image && Storage::disk('public')->exists($student->parent_image)) {
+            Storage::disk('public')->delete($student->parent_image);
+        }
         $student->delete();
 
         return redirect(route('students.index'))->with('error', 'Student deleted successfully');

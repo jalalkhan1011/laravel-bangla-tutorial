@@ -19,7 +19,8 @@
 
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('students.update', $student->slug) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('students.update', $student->slug) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
@@ -47,6 +48,13 @@
                                 <input type="file" class="form-control" id="" name="student_image"
                                     placeholder="Enter student image">
                                 @error('student_image')
+                                    <div><span class="text-danger">{{ $message }}</span></div>
+                                @enderror
+
+                                <label for="" class="mt-2">Parent Image</label>
+                                <input type="file" class="form-control" id="" name="parent_image"
+                                    placeholder="Enter student image">
+                                @error('parent_image')
                                     <div><span class="text-danger">{{ $message }}</span></div>
                                 @enderror
                             </div>

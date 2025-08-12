@@ -46,6 +46,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Image</th>
+                                    <th scope="col">P.Image</th>
                                     <th scope="col">Student Name</th>
                                     <th scope="col">Student Address</th>
                                     <th scope="col">Student Email</th>
@@ -57,7 +58,9 @@
                                 @foreach ($students as $student)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td><img src="{{ asset('upload/studentImage/' . $student->student_image) }}" height="50"></td>
+                                        <td><img src="{{ asset('upload/studentImage/' . $student->student_image) }}"
+                                                height="50"></td>
+                                        <td><img src="{{ asset('storage/' . $student->parent_image) }}" height="50"></td>
                                         <td>{{ $student->student_name ?: '' }}</td>
                                         <td>{{ $student->student_address ?: '' }}</td>
                                         <td>{{ $student->student_email ?: '' }}</td>

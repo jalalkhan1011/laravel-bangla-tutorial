@@ -45,6 +45,13 @@
                                 @error('student_image')
                                     <div><span class="text-danger">{{ $message }}</span></div>
                                 @enderror
+
+                                <label for="" class="mt-2">Parent Image</label>
+                                <input type="file" class="form-control" id="" name="parent_image"
+                                    placeholder="Enter student image">
+                                @error('parent_image')
+                                    <div><span class="text-danger">{{ $message }}</span></div>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
