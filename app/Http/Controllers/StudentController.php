@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\StudentImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,6 +37,7 @@ class StudentController extends Controller
             'student_email' => 'required|email|unique:students,student_email',
             'student_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
             'parent_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
+            'student_mul_image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
 
         // Student::create([
@@ -65,7 +67,21 @@ class StudentController extends Controller
             $data['parent_image'] = $imagePath;
         }
 
-        Student::create($data);
+        $studnetId = Student::create($data);
+
+        if ($request->hasFile('student_mul_image')) {
+            foreach ($request->file('student_mul_image') as $index => $file) {
+                // $image = $request->student_mul_image;
+                $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->move(public_path('upload/studentMulImage/'), $imageName);
+
+                StudentImage::create([
+                    'student_mul_image' => $imageName,
+                    'student_id' => $studnetId->id
+                ]);
+            }
+        }
 
         return redirect(route('students.index'))->with('success', 'Student Created Successfully!');
     }
@@ -103,6 +119,7 @@ class StudentController extends Controller
             'student_email' => 'required|email|unique:students,student_email,' . $student->id,
             'student_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
             'parent_image' => 'nullable|image|mimes:png,jpeg,gif,jpg',
+            'student_mul_image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
 
         // $student->update([
@@ -138,6 +155,26 @@ class StudentController extends Controller
 
         $student->update($data);
 
+        if ($request->hasFile('student_mul_image')) {
+            $oldImages = StudentImage::where('student_id', $student->id)->get();
+            foreach ($oldImages as $oldImage) {
+                unlink(public_path('upload/studentMulImage/' . $oldImage->student_mul_image));
+                $oldImage->delete();
+            }
+
+            foreach ($request->file('student_mul_image') as $index => $file) {
+
+                $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->move(public_path('upload/studentMulImage/'), $imageName);
+
+                StudentImage::create([
+                    'student_mul_image' => $imageName,
+                    'student_id' => $student->id
+                ]);
+            }
+        }
+
 
         return redirect(route('students.index'))->with('warning', 'Student updated Successfully!');
     }
@@ -148,10 +185,24 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         // $student = Student::findOrFail($id);
-        unlink(public_path('upload/studentImage/' . $student->student_image));
+        if ($student->student_image) {
+            unlink(public_path('upload/studentImage/' . $student->student_image));
+        }
+
+
         if ($student->parent_image && Storage::disk('public')->exists($student->parent_image)) {
             Storage::disk('public')->delete($student->parent_image);
         }
+
+        $oldImages = StudentImage::where('student_id', $student->id)->get();
+        if (!empty($oldImages)) {
+            foreach ($oldImages as $oldImage) {
+                unlink(public_path('upload/studentMulImage/' . $oldImage->student_mul_image));
+                $oldImage->delete();
+            }
+        }
+
+
         $student->delete();
 
         return redirect(route('students.index'))->with('error', 'Student deleted successfully');

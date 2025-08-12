@@ -26,4 +26,9 @@ class Student extends Model
     {
         return 'slug';
     }
+
+    public function studentImages()
+    {
+        return $this->hasMany(StudentImage::class);
+    }
 }
