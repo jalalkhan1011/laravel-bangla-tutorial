@@ -12,6 +12,7 @@
     <title>Laravel bangla tutorial</title>
 
     @include('admin.include.css')
+    @stack('css')
 
 </head>
 
@@ -61,7 +62,7 @@
 
     <!-- Bootstrap core JavaScript-->
     @include('admin.include.js')
-
+    @stack('js')
 </body>
 
 </html>
