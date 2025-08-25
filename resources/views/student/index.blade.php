@@ -41,6 +41,12 @@
                                 {{ session('error') }}
                             </div>
                         @endif
+
+                        <form method="GET" action="{{ route('students.index') }}">
+                            <input type="text" name="search" placeholder="Search user..." value="{{ $search }}">
+                            <button type="submit">Search</button>
+                        </form>
+
                         <table class="table">
                             <thead>
                                 <tr>
@@ -86,6 +92,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {!! $students->withQueryString()->links('pagination::bootstrap-5') !!}
                     </div>
                 </div>
 
