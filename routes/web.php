@@ -8,6 +8,8 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,4 +29,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->group(function () { 
     Route::resource('/students', StudentController::class);
+    Route::resource('/profiles',ProfileController::class);
+    Route::resource('/users',UserController::class);
 });
