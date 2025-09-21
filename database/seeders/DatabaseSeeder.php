@@ -22,9 +22,12 @@ class DatabaseSeeder extends Seeder
         // ]);
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('categories')->truncate();
+        DB::table('products')->truncate();
+        DB::table('courses')->truncate();
         $this->call([
             CategoryTableSeeder::class,
             ProductTableSeeder::class,
+            CourseTableSeeder::class,
         ]);
     }
 }

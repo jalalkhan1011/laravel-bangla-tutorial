@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentCourseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,4 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/students', StudentController::class);
     Route::resource('/profiles',ProfileController::class);
     Route::resource('/users',UserController::class);
+    Route::get('/student-course/list',[StudentCourseController::class,'index'])->name('student.course.index');
+    Route::get('/student-course/create',[StudentCourseController::class,'create'])->name('student.course.create');
+    Route::post('/student-course/store',[StudentCourseController::class,'store'])->name('student.course.store');
+    Route::get('/student-course/{id}/edit',[StudentCourseController::class,'edit'])->name('student.course.edit');
+    Route::put('/student-course/{id}',[StudentCourseController::class,'update'])->name('student.course.update');
+    Route::delete('/student-course/{id}',[StudentCourseController::class,'destroy'])->name('student.course.delete');
 });

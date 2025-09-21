@@ -1,0 +1,89 @@
+@extends('admin.layouts.master')
+
+@section('content')
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Students Course</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Basic Card Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="m-0 font-weight-bold text-primary">Student Course list</h6>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ route('student.course.create') }}" class="btn btn-sm btn-primary">Course Add</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('warning'))
+                            <div class="alert alert-warning">
+                                {{ session('warning') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i=0; @endphp
+                                @foreach ($studentCategories as $studentCategorie)
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $studentCategorie->student_name ?: '' }}</td>
+                                        <td>
+                                            @foreach ($studentCategorie->courses as $course)
+                                                <span class="badge-info">{{ $course->course_name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item"><a href="{{route('student.course.edit',$studentCategorie->id)}}"
+                                                        class="btn btn-sm btn-warning">Edit</a></li>
+                                                <li class="list-inline-item">
+                                                    <form action="{{route('student.course.delete',$studentCategorie->id)}}" method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {!! $studentCategories->withQueryString()->links('pagination::bootstrap-5') !!}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+@endsection
