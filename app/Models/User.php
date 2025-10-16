@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function country()
+    {
+        return $this->belongto(Country::class);
+    }
+
+    public function passport()
+    {
+        return $this->hasOne(Passport::class);
+    }
 }

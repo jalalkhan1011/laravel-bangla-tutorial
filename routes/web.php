@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FormController;
@@ -38,4 +39,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/student-course/{id}/edit',[StudentCourseController::class,'edit'])->name('student.course.edit');
     Route::put('/student-course/{id}',[StudentCourseController::class,'update'])->name('student.course.update');
     Route::delete('/student-course/{id}',[StudentCourseController::class,'destroy'])->name('student.course.delete');
+    Route::get('/country/{id}/passport',[CountryController::class,'show']);
 });
